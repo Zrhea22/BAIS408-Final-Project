@@ -1,0 +1,479 @@
+cells:
+  - kind: 1
+    value: "# **Queries For Zach's Computers Database**\r
+
+      ___"
+    languageId: markdown
+  - kind: 1
+    value: "1. Which customers have all their orders fully paid and delivered? Show
+      the shipping status and carrier for only orders that are fully paid and
+      delivered? <br><br>\r
+
+      Output: customer_id, first_name, last_name, total_orders, total_spent`"
+    languageId: markdown
+  - kind: 2
+    value: "select c.customer_id, c.fname first_name, c.lname last_name,\r
+
+      (select count(o2.order_id)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_orders,\r
+
+      (select sum(o2.subtotal_amount)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_spent\r
+
+      from customer c\r
+
+      where c.customer_id in (\r
+
+      select o.customer_id\r
+
+      from orders o\r
+
+      minus\r
+
+      select o2.customer_id\r
+
+      from orders o2, payment p, shipment s\r
+
+      where o2.order_id = p.order_id\r
+
+      and o2.order_id = s.order_id\r
+
+      and not (p.status = 'Completed' and s.status = 'Delivered')\r
+
+      )\r
+
+      order by total_spent desc;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "2. Which products have received reviews with an average rating above 3.5
+      and have no pending returns? Show product details, category, brand and the
+      review statistics?\r
+
+      <br><br>\r
+
+      Output: product_id, model_id, brand_name, category_name, avg_rating"
+    languageId: markdown
+  - kind: 2
+    value: "select p.product_id, p.model_name, b.brand_name, ct.category_name,\r
+
+      (select avg(r.rating)\r
+
+      from review r\r
+
+      where r.product_id = p.product_id) avg_rating\r
+
+      from product p, brand b, category ct\r
+
+      where p.brand_id = b.brand_id\r
+
+      and p.category_id = ct.category_id\r
+
+      and (select avg(r2.rating)\r
+
+      from review r2\r
+
+      where r2.product_id = p.product_id) > 3.5\r
+
+      and p.product_id in (\r
+
+      select p2.product_id\r
+
+      from product p2\r
+
+      minus\r
+
+      select oi.product_id\r
+
+      from return rt, orders o, order_item oi\r
+
+      where rt.order_id = o.order_id\r
+
+      and o.order_id = oi.order_id\r
+
+      and rt.status = 'Pending'\r
+
+      )\r
+
+      order by avg_rating desc"
+    languageId: oracle-sql
+  - kind: 1
+    value: "3. Which warehouses have products where the quantity on hand is less
+      than 150% of the reorder point? Display the inventory levels and calculate
+      the percentage above the reorder point.\r
+
+      <br><br>\r
+
+      Output: warehouse_id, warehouse_name, product_id, model_name,
+      quantity_on_hand, reorder_point, percent_above_reorder"
+    languageId: markdown
+  - kind: 2
+    value: "select w.warehouse_id, w.warehouse_name, p.product_id, p.model_name,
+      i.quantity_on_hand, i.reorder_point,\r
+
+      ((i.quantity_on_hand - i.reorder_point) / i.reorder_point) * 100
+      percent_above_reorder\r
+
+      from warehouse w, inventory i, product p\r
+
+      where w.warehouse_id = i.warehouse_id\r
+
+      and i.quantity_on_hand = p.product_id\r
+
+      and i.quantity_on_hand < (i.reorder_point * 2)\r
+
+      order by percent_above_reorder asc;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "4. What products have been ordered at least twice and received a review?
+      How many times was the product ordered and how many reviews did it
+      receive?\r
+
+      <br><br>\r
+
+      Output: product_id, model_name, sku, times_ordered, review_count"
+    languageId: markdown
+  - kind: 2
+    value: "select p.product_id, p.model_name, p.sku,\r
+
+      (select count(oi.order_item_id)\r
+
+      from order_item oi\r
+
+      where oi.product_id = p.product_id) times_ordered,\r
+
+      (select count(r.review_id)\r
+
+      from review r\r
+
+      where r.product_id = p.product_id) review_count\r
+
+      from product p\r
+
+      where\r
+
+      (select count(oi.order_item_id)\r
+
+      from order_item oi\r
+
+      where oi.product_id = p.product_id) >= 2\r
+
+      and not exists (\r
+
+      select p2.product_id\r
+
+      from product p2\r
+
+      where p2.product_id = p.product_id\r
+
+      minus\r
+
+      select r.product_id\r
+
+      from review r\r
+
+      where r.product_id = p.product_id\r
+
+      );"
+    languageId: oracle-sql
+  - kind: 1
+    value: "5. Which brands have products that have been reviewed and have an
+      average rating of 4 or more?\r
+
+      <br><br>\r
+
+      Output: brand_id, brand name, supplier_name, supplier_rating,
+      total_units_sold, avg_product_rating"
+    languageId: markdown
+  - kind: 2
+    value: "select distinct b.brand_id, b.brand_name, s.supplier_name, s.rating
+      supplier_rating,\r
+
+      (select sum(oi.quantity)\r
+
+      from order_item oi, product p4\r
+
+      where oi.product_id = p4.product_id\r
+
+      and p4.brand_id = b.brand_id) total_units_sold,\r
+
+      (select avg(r.rating)\r
+
+      from review r, product p2\r
+
+      where r.product_id = p2.product_id\r
+
+      and p2.brand_id = b.brand_id) avg_product_rating\r
+
+      from brand b, supplier s, product p\r
+
+      where b.supplier_id = s.supplier_id\r
+
+      and p.brand_id = b.brand_id\r
+
+      and (select avg(r2.rating)\r
+
+      from review r2, product p3\r
+
+      where r2.product_id = p3.product_id\r
+
+      and p3.brand_id = b.brand_id) >= 4\r
+
+      order by avg_product_rating desc;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "6. Which customers have made returns? Categorize customers with refund
+      amounts over $1000 as ‘High Refund’ and those with less as ‘Low Refund’?\r
+
+      <br><br>\r
+
+      Output: customer_id, first name, last_name, total_refund, refund_category"
+    languageId: markdown
+  - kind: 2
+    value: "select c.customer_id, c.fname first_name, c.lname last_name,\r
+
+      (select sum(rt.refund_amount)\r
+
+      from return rt\r
+
+      where rt.customer_id = c.customer_id\r
+
+      and rt.refund_amount > 1000)total_refund, 'High Refund' refund_category\r
+
+      from customer c, return r\r
+
+      where c.customer_id = r.customer_id\r
+
+      and r.refund_amount > 1000\r
+
+      union\r
+
+      select c.customer_id, c.fname first_name, c.lname last_name,\r
+
+      (select sum(rt.refund_amount)\r
+
+      from return rt\r
+
+      where rt.customer_id = c.customer_id\r
+
+      and rt.refund_amount <= 1000)total_refund, 'Low Refund' refund_category\r
+
+      from customer c, return r2\r
+
+      where c.customer_id = r2.customer_id\r
+
+      and r2.refund_amount <= 1000\r
+
+      order by customer_id asc;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "7. List all customers who have purchased products from the ‘Laptops’
+      category and left a product\r
+
+      review.\r
+
+      <br><br>\r
+
+      Output: customer_id, fname first_name, lname last_name, customer_email,
+      total_reviews, laptops_purchased"
+    languageId: markdown
+  - kind: 2
+    value: "select c.customer_id, c.fname, c.lname, c.customer_email,\r
+
+      (select count(r.review_id)\r
+
+      from review r\r
+
+      where r.customer_id = c.customer_id) total_reviews,\r
+
+      (select count(ct.category_name)\r
+
+      from orders o, order_item oi, product p, category ct\r
+
+      where o.order_id = oi.order_id\r
+
+      and oi.product_id = p.product_id\r
+
+      and p.category_id = ct.category_id\r
+
+      and ct.category_name = 'Laptops'\r
+
+      and o.customer_id = c.customer_id) laptop_purchases\r
+
+      from customer c, orders o, order_item oi, product p, category ct\r
+
+      where c.customer_id = o.customer_id\r
+
+      and o.order_id = oi.order_id\r
+
+      and oi.product_id = p.product_id\r
+
+      and p.category_id = ct.category_id\r
+
+      and ct.category_name = 'Laptops'\r
+
+      and not exists (\r
+
+      select customer_id\r
+
+      from customer c2\r
+
+      where c2.customer_id = c.customer_id\r
+
+      minus\r
+
+      select r.customer_id\r
+
+      from review r\r
+
+      where"
+    languageId: oracle-sql
+  - kind: 1
+    value: "8.List products that are available in all warehouses\r
+
+      <br><br>\r
+
+      Output: product_id, model_name, warehouse_id, warehouse_name, price"
+    languageId: markdown
+  - kind: 2
+    value: "select p.product_id, p.model_name, w.warehouse_id, w.warehouse_name,
+      p.unit_price price\r
+
+      from product p, inventory i, warehouse w\r
+
+      where p.product_id = i.product_id\r
+
+      and i.warehouse_id = w.warehouse_id\r
+
+      and i.warehouse_id in (1,2,3,4,5)\r
+
+      and p.unit_price > 1000\r
+
+      order by p.product_id, w.warehouse_id;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "9. Show customers who have either made purchases over $2000 OR have
+      written reviews with a rating\r
+
+      of 5, but not both.\r
+
+      <br><br>\r
+
+      Output: customer_id, fname, lname, customer_type"
+    languageId: markdown
+  - kind: 2
+    value: "select c.fname first_name, c.lname last_name, c.customer_id,\r
+
+      (select sum(o2.subtotal_amount)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_amount_spent\r
+
+      from customer c, orders o\r
+
+      where c.customer_id = o.customer_id\r
+
+      and o.subtotal_amount > 1500\r
+
+      minus\r
+
+      select c.fname, c.lname, c.customer_id,\r
+
+      (select sum(o2.subtotal_amount)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_amount_spent\r
+
+      from customer c, review r\r
+
+      where c.customer_id = r.customer_id\r
+
+      and r.rating = 5\r
+
+      union\r
+
+      select c.fname, c.lname, c.customer_id,\r
+
+      (select sum(o2.subtotal_amount)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_amount_spent\r
+
+      from customer c, review r\r
+
+      where c.customer_id = r.customer_id\r
+
+      and r.rating = 5\r
+
+      minus\r
+
+      select c.fname, c.lname, c.customer_id,\r
+
+      (select sum(o2.subtotal_amount)\r
+
+      from orders o2\r
+
+      where o2.customer_id = c.customer_id) total_amount_spent\r
+
+      from customer c, orders o\r
+
+      where c.customer_id = o.customer_id\r
+
+      and o.subtotal_amount > 1500\r
+
+      order by customer_id;"
+    languageId: oracle-sql
+  - kind: 1
+    value: "10. Find suppliers whose average product price is above the overall
+      average, display products from\r
+
+      those suppliers.\r
+
+      <br><br>\r
+
+      Output: supplier_id, supplier_name, brand_name, avg_price, product_count,"
+    languageId: markdown
+  - kind: 2
+    value: "select distinct s.supplier_id, s.supplier_name, b.brand_name,\r
+
+      (select avg(p2.unit_price)\r
+
+      from product p2, brand b2\r
+
+      where p2.brand_id = b2.brand_id\r
+
+      and b2.supplier_id = s.supplier_id) avg_price,\r
+
+      (select count(p3.product_id)\r
+
+      from product p3, brand b3\r
+
+      where p3.brand_id = b3.brand_id\r
+
+      and b3.supplier_id = s.supplier_id) product_count\r
+
+      from supplier s, brand b, product p\r
+
+      where s.supplier_id = b.supplier_id\r
+
+      and b.brand_id = p.brand_id\r
+
+      and (select avg(p4.unit_price)\r
+
+      from product p4, brand b4\r
+
+      where p4.brand_id = b4.brand_id\r
+
+      and b4.supplier_id = s.supplier_id) > (select avg(unit_price) from
+      product)\r
+
+      order by avg_price desc;"
+    languageId: oracle-sql
