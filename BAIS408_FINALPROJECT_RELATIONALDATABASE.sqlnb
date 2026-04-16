@@ -1,0 +1,1543 @@
+cells:
+  - kind: 1
+    value: "# **Zach's Computers Relational Database**\r
+
+      ___"
+    languageId: markdown
+  - kind: 2
+    value: "/*\r
+
+      --For when running in SQL Developer SET DEFINE OFF;\r
+
+      --View tables in the DB\r
+
+      select * from tab;\r
+
+      --view data in the table\r
+
+      select * from customer;\r
+
+      select * from customer_address;\r
+
+      select * from product;\r
+
+      select * from brand;\r
+
+      select * from category;\r
+
+      select * from supplier;\r
+
+      select * from orders;\r
+
+      select * from order_item;\r
+
+      select * from payment;\r
+
+      select * from warehouse;\r
+
+      select * from shipment;\r
+
+      select * from inventory;\r
+
+      select * from return;\r
+
+      select * from review;\r
+
+      \r
+
+      --Drop Tables:\r
+
+      drop table return;\r
+
+      drop table order_item;\r
+
+      drop table payment;\r
+
+      drop table shipment;\r
+
+      drop table review;\r
+
+      drop table inventory;\r
+
+      drop table orders;\r
+
+      drop table customer_address;\r
+
+      drop table product;\r
+
+      drop table brand;\r
+
+      drop table warehouse;\r
+
+      drop table customer;\r
+
+      drop table supplier;\r
+
+      drop table category;\r
+
+      */"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 1. Create the Category Table\r
+
+      CREATE TABLE CATEGORY\r
+
+      (CATEGORY_ID INT NOT NULL ,\r
+
+      CATEGORY_NAME VARCHAR(300),\r
+
+      DESCRIPTION VARCHAR(50),\r
+
+      IS_ACTIVE CHAR(1),\r
+
+      PRIMARY KEY (CATEGORY_ID)) ;\r
+
+      -- Insert into Category Table\r
+
+      insert into Category values(1,'Laptops','Notebook and ultrabook
+      computers','T');\r
+
+      insert into Category values(2,'Desktops','Tower and small form factor
+      PCs','T');\r
+
+      insert into Category values(3,'Monitors','Standalone displays','T');\r
+
+      insert into Category values(4,'Keyboards & Mice','Input
+      peripherals','T');\r
+
+      insert into Category values(5,'Storage','Internal and external
+      drives','T');\r
+
+      insert into Category values(6,'Graphics Cards','Dedicated GPUs','T');\r
+
+      insert into Category values(7,'Tablets','Tablet devices','T');\r
+
+      insert into Category values(8,'Headsets','Audio headsets','T');\r
+
+      insert into Category values(9,'Printers','Home and office
+      printers','T');\r
+
+      insert into Category values(10,'Accessories','Miscellaneous
+      accessories','T');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 2. Create the Supplier Table\r
+
+      CREATE TABLE SUPPLIER\r
+
+      (SUPPLIER_ID INT NOT NULL ,\r
+
+      SUPPLIER_NAME VARCHAR(50) NOT NULL,\r
+
+      CONTACT_NAME VARCHAR(30),\r
+
+      CONTACT_EMAIL VARCHAR(50),\r
+
+      RATING INT CHECK (RATING IN (1,2,3,4,5)),\r
+
+      PHONE CHAR(12),\r
+
+      PRIMARY KEY (SUPPLIER_ID)) ;\r
+
+      -- Insert into Supplier Table\r
+
+      insert into Supplier values(1,'TechHive Supply Co','Jordan
+      Ellis','jordan.ellis@techhive.com',5,'800-555-1001');\r
+
+      insert into Supplier values(2,'Vertex Components','Riley
+      Carter','riley.carter@vertexcomp.com',4,'800-555-1002');\r
+
+      insert into Supplier values(3,'BluePeak Disicators','Morgan
+      Price','morgan.price@bluepeakdist.com',4,'800-555-1003');\r
+
+      insert into Supplier values(4,'Summit IT Wholesale','Taylor
+      Brooks','taylor.brooks@summitit.com',5,'800-555-1004');\r
+
+      insert into Supplier values(5,'Greenline Tech Partners','Casey
+      Ward','casey.ward@greenlinetech.com',3,'800-555-1005');\r
+
+      insert into Supplier values(6,'Northbridge Logistics','Avery
+      Scott','avery.scott@northbridge.com',4,'800-555-1006');\r
+
+      insert into Supplier values(7,'IronGate Hardware','Jamie
+      Flores','jamie.flores@irongatehw.com',5,'800-555-1007');\r
+
+      insert into Supplier values(8,'Crescent Tech Supply','Logan
+      Reyes','logan.reyes@crescenttech.com',3,'800-555-1008');\r
+
+      insert into Supplier values(9,'SilverStream Electronics','Drew
+      King','drew.king@silverstream.com',4,'800-555-1009');\r
+
+      insert into Supplier values(10,'BrightCircuit Global','Kendall
+      Lane','kendall.lane@brightcircuit.com',5,'800-555-1010');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 3. Create the Customer Table\r
+
+      CREATE TABLE CUSTOMER\r
+
+      (CUSTOMER_ID INT NOT NULL ,\r
+
+      FNAME VARCHAR(20),\r
+
+      LNAME VARCHAR(20),\r
+
+      CUSTOMER_EMAIL VARCHAR(50),\r
+
+      CUSTOMER_PHONE CHAR(12),\r
+
+      PRIMARY KEY (CUSTOMER_ID)) ;\r
+
+      -- Insert into Customer Table\r
+
+      insert into Customer
+      values(1,'Liam','Carter','liam.carter@example.com','555-218-9043');\r
+
+      insert into Customer
+      values(2,'Emma','Reed','emma.reed@example.com','555-762-1189');\r
+
+      insert into Customer
+      values(3,'Noah','Mitchell','noah.mitchell@example.com','555-439-6702');\r
+
+      insert into Customer
+      values(4,'Ava','Ramirez','ava.ramirez@example.com','555-983-2417');\r
+
+      insert into Customer
+      values(5,'William','Hayes','william.hayes@example.com','555-640-5528');\r
+
+      insert into Customer
+      values(6,'Sophia','Bennett','sophia.bennett@example.com','555-774-6621');\
+      \r
+
+      insert into Customer
+      values(7,'James','Parker','james.parker@example.com','555-317-9084');\r
+
+      insert into Customer
+      values(8,'Isabella','Foster','isabella.foster@example.com','555-205-4498'\
+      );\r
+
+      insert into Customer
+      values(9,'Elijah','Griffin','elijah.griffin@example.com','555-910-3374');\
+      \r
+
+      insert into Customer
+      values(10,'Mia','Sullivan','mia.sullivan@example.com','555-682-7940');\r
+
+      insert into Customer
+      values(11,'Logan','Barnes','logan.barnes@example.com','555-448-1206');\r
+
+      insert into Customer
+      values(12,'Harper','Cole','harper.cole@example.com','555-799-4523');\r
+
+      insert into Customer
+      values(13,'Ethan','Turner','ethan.turner@example.com','555-214-9031');\r
+
+      insert into Customer
+      values(14,'Olivia','Phillips','olivia.phillips@example.com','555-782-1194\
+      ');\r
+
+      insert into Customer
+      values(15,'Mason','Howard','mason.howard@example.com','555-439-6728');\r
+
+      insert into Customer
+      values(16,'Charlotte','Ward','charlotte.ward@example.com','555-983-2475');\
+      \r
+
+      insert into Customer
+      values(17,'Lucas','Torres','lucas.torres@example.com','555-640-5582');\r
+
+      insert into Customer
+      values(18,'Amelia','Peterson','amelia.peterson@example.com','555-774-6639\
+      ');\r
+
+      insert into Customer
+      values(19,'Henry','Gray','henry.gray@example.com','555-317-9072');\r
+
+      insert into Customer
+      values(20,'Evelyn','Ramsey','evelyn.ramsey@example.com','555-205-4481');\r
+
+      insert into Customer
+      values(21,'Alexander','James','alexander.james@example.com','555-910-3379\
+      ');\r
+
+      insert into Customer
+      values(22,'Abigail','Hughes','abigail.hughes@example.com','555-682-7954');\
+      \r
+
+      insert into Customer
+      values(23,'Daniel','Butler','daniel.butler@example.com','555-448-1273');\r
+
+      insert into Customer
+      values(24,'Ella','Simmons','ella.simmons@example.com','555-799-4518');\r
+
+      insert into Customer
+      values(25,'Matthew','Foster','matthew.foster@example.com','555-910-0048');\
+      \r
+
+      insert into Customer
+      values(26,'Scarlett','Gonzalez','scarlett.gonzalez@example.com','555-910-\
+      1186');\r
+
+      insert into Customer
+      values(27,'Joseph','Bryant','joseph.bryant@example.com','555-910-2284');\r
+
+      insert into Customer
+      values(28,'Grace','Alexander','grace.alexander@example.com','555-910-3371\
+      ');\r
+
+      insert into Customer
+      values(29,'David','Russell','david.russell@example.com','555-910-4487');\r
+
+      insert into Customer
+      values(30,'Chloe','Griffin','chloe.griffin@example.com','555-910-5529');\r
+
+      insert into Customer
+      values(31,'Wyatt','Diaz','wyatt.diaz@example.com','555-910-6674');\r
+
+      insert into Customer
+      values(32,'Zoey','Hayes','zoey.hayes@example.com','555-910-7742');\r
+
+      insert into Customer
+      values(33,'Aiden','Walker','aiden.walker@example.com','555-910-8812');\r
+
+      insert into Customer
+      values(34,'Nora','Cunningham','nora.cunningham@example.com','555-910-7746\
+      ');\r
+
+      insert into Customer
+      values(35,'Caleb','Henderson','caleb.henderson@example.com','555-910-6638\
+      ');\r
+
+      insert into Customer
+      values(36,'Lily','Murphy','lily.murphy@example.com','555-910-5524');\r
+
+      insert into Customer
+      values(37,'Julian','Reeves','julian.reeves@example.com','555-910-4492');\r
+
+      insert into Customer
+      values(38,'Aria','Douglas','aria.douglas@example.com','555-910-3381');\r
+
+      insert into Customer
+      values(39,'Mateo','Keller','mateo.keller@example.com','555-910-2290');\r
+
+      insert into Customer
+      values(40,'Zoe','Harrington','zoe.harrington@example.com','555-910-1185');\
+      \r
+
+      insert into Customer
+      values(41,'Isaac','Stevens','isaac.stevens@example.com','555-910-0079');\r
+
+      insert into Customer
+      values(42,'Penelope','Gordon','penelope.gordon@example.com','555-910-5563\
+      ');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 4. Create the Warehouse Table\r
+
+      CREATE TABLE WAREHOUSE\r
+
+      (WAREHOUSE_ID INT NOT NULL ,\r
+
+      WAREHOUSE_NAME VARCHAR(50),\r
+
+      STREET_ADDRESS VARCHAR(30),\r
+
+      CITY VARCHAR(20),\r
+
+      STATE CHAR(2),\r
+
+      ZIP CHAR(5),\r
+
+      PRIMARY KEY (WAREHOUSE_ID)) ;\r
+
+      -- Insert into Warehouse Table\r
+
+      insert into Warehouse values(1,'Warehouse 1','34 Industrial Park Drive
+      ','Nashville','TN','47209');\r
+
+      insert into Warehouse values(2,'Warehouse 2','102 County Road
+      401','Memphis','TN','38111');\r
+
+      insert into Warehouse values(3,'Warehouse 3','18 Ed Perry
+      Boulevard','Atlanta','GA','30318');\r
+
+      insert into Warehouse values(4,'Warehouse 4','250 McLarty
+      Road','Memphis','TN','38111');\r
+
+      insert into Warehouse values(5,'Warehouse 5','71 Highway 7 South
+      ','Dallas','TX','75201');\r
+
+      insert into Warehouse values(6,'Warehouse 6','145 Industrial Park
+      Loop','Memphis','TN','38116');\r
+
+      insert into Warehouse values(7,'Warehouse 7','500 Highway 30 East
+      ','Atlanda','GA','30318');\r
+
+      insert into Warehouse values(8,'Warehouse 8','2600 West Oxford
+      Loop','Oxford','MS','38655');\r
+
+      insert into Warehouse values(9,'Warehouse 9','12 Office Park
+      Drive','Dallas','TX','75209');\r
+
+      insert into Warehouse values(10,'Warehouse 10','212 Allison Cove
+      ','Atlanta','GA','30339');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 5. Create the Brand Table\r
+
+      CREATE TABLE BRAND\r
+
+      (BRAND_ID INT NOT NULL,\r
+
+      SUPPLIER_ID INT,\r
+
+      BRAND_NAME VARCHAR(50),\r
+
+      WEBSITE_URL VARCHAR(100),\r
+
+      SUPPORT_PHONE CHAR(12),\r
+
+      HQ_COUNTRY VARCHAR(30),\r
+
+      PRIMARY KEY (BRAND_ID),\r
+
+      FOREIGN KEY (SUPPLIER_ID) REFERENCES SUPPLIER(SUPPLIER_ID));\r
+
+      -- Insert into Brand Table\r
+
+      insert into Brand
+      values(1,1,'Dell','https://www.dell.com/','800-624-9896','USA');\r
+
+      insert into Brand
+      values(2,2,'Apple','https://www.apple.com/','800-692-7753','USA');\r
+
+      insert into Brand
+      values(3,3,'Lenovo','https://www.lenovo.com/','877-453-6686','China');\r
+
+      insert into Brand
+      values(4,4,'HP','https://www.hp.com/','800-474-6836','USA');\r
+
+      insert into Brand
+      values(5,5,'ASUS','https://www.asus.com/','888-678-3688','Taiwan');\r
+
+      insert into Brand
+      values(6,6,'Logitech','https://www.logitech.com/','646-454-3200','Switzer\
+      land');\r
+
+      insert into Brand
+      values(7,7,'Samsung','https://www.samsung.com/','800-726-7864','South
+      Korea');\r
+
+      insert into Brand
+      values(8,8,'Seagate','https://www.seagate.com/','800-732-4283','USA');\r
+
+      insert into Brand
+      values(9,9,'Razer','https://www.razer.com/','855-872-5233','USA');\r
+
+      insert into Brand
+      values(10,10,'LG','https://www.lg.com/','800-243-0000','South Korea');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 6. Create the Product Table\r
+
+      CREATE TABLE PRODUCT\r
+
+      (PRODUCT_ID INT NOT NULL,\r
+
+      SKU CHAR(8),\r
+
+      BRAND_ID INT,\r
+
+      CATEGORY_ID INT,\r
+
+      MODEL_NAME VARCHAR(50),\r
+
+      UNIT_PRICE DECIMAL(10,2),\r
+
+      MANUFACTURE_LOCATION VARCHAR(30),\r
+
+      PRIMARY KEY (PRODUCT_ID),\r
+
+      FOREIGN KEY (BRAND_ID) REFERENCES BRAND(BRAND_ID),\r
+
+      FOREIGN KEY (CATEGORY_ID) REFERENCES CATEGORY(CATEGORY_ID));\r
+
+      -- Insert into Product Table\r
+
+      insert into Product values(1,'SKU-1001',1,1,'Dell XPS
+      15',1899.99,'USA');\r
+
+      insert into Product values(2,'SKU-1002',2,1,'MacBook Air
+      M2',1199,'USA');\r
+
+      insert into Product values(3,'SKU-1003',3,1,'ThinkPad X1
+      Carbon',1499,'China');\r
+
+      insert into Product values(4,'SKU-1004',4,2,'HP Omen
+      45L',1799.99,'USA');\r
+
+      insert into Product values(5,'SKU-1005',5,3,'ASUS ProArt
+      PA278QV',329.99,'China');\r
+
+      insert into Product values(6,'SKU-1006',7,3,'Samsung Odyssey
+      G7',599.99,'Vietnam');\r
+
+      insert into Product values(7,'SKU-1007',6,4,'Logitech MX
+      Keys',119.99,'Switzerland');\r
+
+      insert into Product values(8,'SKU-1008',6,4,'Logitech MX Master
+      3S',99.99,'Switzerland');\r
+
+      insert into Product values(9,'SKU-1009',8,5,'Seagate Backup Plus
+      4TB',129.99,'Thailand');\r
+
+      insert into Product values(10,'SKU-1010',8,5,'Seagate FireCuda 530
+      2TB',279.99,'Thailand');\r
+
+      insert into Product values(11,'SKU-1011',9,6,'Razer GeForce RTX
+      4090',2199.99,'China');\r
+
+      insert into Product values(12,'SKU-1012',10,3,'LG UltraGear
+      27GN950',799.99,'South Korea');\r
+
+      insert into Product values(13,'SKU-1013',1,1,'Dell Inspiron
+      14',749.99,'Mexico');\r
+
+      insert into Product values(14,'SKU-1014',2,1,'MacBook Pro 14
+      M3',1999,'USA');\r
+
+      insert into Product values(15,'SKU-1015',3,6,'Lenovo Legion RTX 4080
+      GPU',1399.99,'China');\r
+
+      insert into Product values(16,'SKU-1016',4,2,'HP Pavilion Gaming
+      Desktop',999.99,'USA');\r
+
+      insert into Product values(17,'SKU-1017',5,3,'ASUS TUF VG27AQ
+      Monitor',399.99,'China');\r
+
+      insert into Product values(18,'SKU-1018',7,3,'Samsung Odyssey Neo
+      G9',1499.99,'Vietnam');\r
+
+      insert into Product values(19,'SKU-1019',6,4,'Logitech G Pro X
+      Keyboard',129.99,'Switzerland');\r
+
+      insert into Product values(20,'SKU-1020',8,5,'Seagate IronWolf
+      8TB',249.99,'Thailand');\r
+
+      insert into Product values(21,'SKU-1021',10,3,'LG UltraWide
+      34WN80C-B',699.99,'South Korea');\r
+
+      insert into Product values(22,'SKU-1022',9,6,'Razer Radeon RX 7900
+      XT',1099.99,'China');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 7. Create the Customer Address Table\r
+
+      CREATE TABLE CUSTOMER_ADDRESS\r
+
+      (CUST_ADDRESS_ID INT NOT NULL,\r
+
+      CUSTOMER_ID INT,\r
+
+      LINE1 VARCHAR(50),\r
+
+      CITY VARCHAR(30),\r
+
+      STATE CHAR(2),\r
+
+      ZIP CHAR(5),\r
+
+      COUNTRY VARCHAR(30),\r
+
+      PRIMARY KEY (CUST_ADDRESS_ID),\r
+
+      FOREIGN KEY (CUSTOMER_ID) REFERENCES CUSTOMER(CUSTOMER_ID));\r
+
+      -- Insert into Customer Address Table\r
+
+      insert into Customer_Address values(101,1,'214 Magnolia
+      Lane','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(102,2,'587 Rebel
+      Drive','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(103,3,'1020 Jefferson
+      Avenue','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(104,4,'341 Old Taylor
+      Road','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(105,5,'755 Maple Grove
+      Way','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(106,6,'128 Creekwood
+      Bend','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(107,7,'912 College Hill
+      Road','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(108,8,'467 Oak Ridge
+      Loop','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(109,9,'233 Pinehurst Cove
+      ','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(110,10,'621 Fraternity Row
+      ','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(111,11,'889 Sorority
+      Row','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(112,12,'304 Jackson Avenue
+      East','Oxford','MS','38655','USA');\r
+
+      insert into Customer_Address values(113,13,'1427 Silver Ridge
+      Court','Oxford','MS','38656','USA');\r
+
+      insert into Customer_Address values(114,14,'908 Willow Bend
+      Parkway','Oxford','MS','38657','USA');\r
+
+      insert into Customer_Address values(115,15,'2218 Oak Hollow
+      Terrace','Oxford','MS','38658','USA');\r
+
+      insert into Customer_Address values(116,16,'567 Maple Ledge
+      Drive','Oxford','MS','38659','USA');\r
+
+      insert into Customer_Address values(117,17,'3104 Pine Crest
+      Landing','Oxford','MS','38660','USA');\r
+
+      insert into Customer_Address values(118,18,'782 Country Brook
+      Lane','Oxford','MS','38661','USA');\r
+
+      insert into Customer_Address values(119,19,'1945 Sunrise Meadow
+      Drive','Oxford','MS','38662','USA');\r
+
+      insert into Customer_Address values(120,20,'4550 Crestview Summit
+      Road','Oxford','MS','38663','USA');\r
+
+      insert into Customer_Address values(121,21,'629 Birchmont Valley
+      Drive','Oxford','MS','38664','USA');\r
+
+      insert into Customer_Address values(122,22,'11803 Autumn Grove
+      Trail','Oxford','MS','38665','USA');\r
+
+      insert into Customer_Address values(123,23,'732 Redwood Crossing
+      Lane','Oxford','MS','38666','USA');\r
+
+      insert into Customer_Address values(124,24,'2549 Lakeshore Edge
+      Drive','Oxford','MS','38667','USA');\r
+
+      insert into Customer_Address values(125,25,'880 Stonehaven Ridge
+      Court','Oxford','MS','38668','USA');\r
+
+      insert into Customer_Address values(126,26,'333 Winding River
+      Path','Oxford','MS','38669','USA');\r
+
+      insert into Customer_Address values(127,27,'1460 Copperleaf Hill
+      Drive','Oxford','MS','38670','USA');\r
+
+      insert into Customer_Address values(128,28,'4987 Hawthorne Crest
+      Loop','Oxford','MS','38671','USA');\r
+
+      insert into Customer_Address values(129,29,'2095 Meadow Chase
+      Lane','Oxford','MS','38672','USA');\r
+
+      insert into Customer_Address values(130,30,'5153 Whispering Pine
+      Overlook,','Oxford','MS','38673','USA');\r
+
+      insert into Customer_Address values(131,31,'6810 Brookside Arbor
+      Street','Oxford','MS','38674','USA');\r
+
+      insert into Customer_Address values(132,32,'1274 Canyon Ridge
+      Overlook','Oxford','MS','38675','USA');\r
+
+      insert into Customer_Address values(133,33,'224 Briarwood Meadow
+      Lane','Oxford','MS','38676','USA');\r
+
+      insert into Customer_Address values(134,34,'612 Autumn Crest
+      Boulevard','Oxford','MS','38677','USA');\r
+
+      insert into Customer_Address values(135,35,'1937 Willow Ridge
+      Pass','Oxford','MS','38678','USA');\r
+
+      insert into Customer_Address values(136,36,'480 Cedarbrook
+      Landing','Oxford','MS','38679','USA');\r
+
+      insert into Customer_Address values(137,37,'1580 Highland Brook
+      Court','Oxford','MS','38680','USA');\r
+
+      insert into Customer_Address values(138,38,'729 Meadowstone
+      Bluff','Oxford','MS','38681','USA');\r
+
+      insert into Customer_Address values(139,39,'205 Oakridge River
+      Trail','Oxford','MS','38682','USA');\r
+
+      insert into Customer_Address values(140,40,'3349 Pine Haven
+      Terrace','Oxford','MS','38683','USA');\r
+
+      insert into Customer_Address values(141,41,'117 Creekside Grove
+      Road','Oxford','MS','38684','USA');\r
+
+      insert into Customer_Address values(142,42,'890 Silverleaf Hollow
+      Drive','Oxford','MS','38685','USA');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 8. Create the Orders Table\r
+
+      CREATE TABLE ORDERS\r
+
+      (ORDER_ID INT NOT NULL ,\r
+
+      CUSTOMER_ID INT,\r
+
+      SHIPPING_ADDRESS_ID INT,\r
+
+      ORDER_DATE DATE,\r
+
+      STATUS VARCHAR(20),\r
+
+      SUBTOTAL_AMOUNT DECIMAL(10,2),\r
+
+      PRIMARY KEY(ORDER_ID),\r
+
+      FOREIGN KEY(CUSTOMER_ID) REFERENCES CUSTOMER(CUSTOMER_ID));\r
+
+      -- Insert into Orders Table\r
+
+      insert into Orders
+      values(1000,1,101,to_date('03/01/2024','mm/dd/yyyy'),'Delivered',1899.99);\
+      \r
+
+      insert into Orders
+      values(1002,2,102,to_date('03/02/2024','mm/dd/yyyy'),'Delivered',1199);\r
+
+      insert into Orders
+      values(1003,3,103,to_date('03/03/2024','mm/dd/yyyy'),'Shipped',1499);\r
+
+      insert into Orders
+      values(1004,4,104,to_date('03/04/2024','mm/dd/yyyy'),'Delivered',3599.98);\
+      \r
+
+      insert into Orders
+      values(1005,5,105,to_date('03/05/2024','mm/dd/yyyy'),'Delivered',329.99);\
+      \r
+
+      insert into Orders
+      values(1006,6,106,to_date('03/06/2024','mm/dd/yyyy'),'Shipped',599.99);\r
+
+      insert into Orders
+      values(1007,7,107,to_date('03/07/2024','mm/dd/yyyy'),'Delivered',239.98);\
+      \r
+
+      insert into Orders
+      values(1008,8,108,to_date('03/08/2024','mm/dd/yyyy'),'Delivered',99.99);\r
+
+      insert into Orders
+      values(1009,9,109,to_date('03/09/2024','mm/dd/yyyy'),'Shipped',129.99);\r
+
+      insert into Orders
+      values(1010,10,110,to_date('03/10/2024','mm/dd/yyyy'),'Delivered',559.98);\
+      \r
+
+      insert into Orders
+      values(1011,11,111,to_date('03/11/2024','mm/dd/yyyy'),'Delivered',2199.99\
+      );\r
+
+      insert into Orders
+      values(1012,12,112,to_date('03/12/2024','mm/dd/yyyy'),'Shipped',799.99);\r
+
+      insert into Orders
+      values(1013,13,101,to_date('03/13/2024','mm/dd/yyyy'),'Delivered',749.99);\
+      \r
+
+      insert into Orders
+      values(1014,14,102,to_date('03/14/2024','mm/dd/yyyy'),'Delivered',1999);\r
+
+      insert into Orders
+      values(1015,15,103,to_date('03/15/2024','mm/dd/yyyy'),'Shipped',2799.98);\
+      \r
+
+      insert into Orders
+      values(1016,16,104,to_date('03/16/2024','mm/dd/yyyy'),'Delivered',999.99);\
+      \r
+
+      insert into Orders
+      values(1017,17,105,to_date('03/17/2024','mm/dd/yyyy'),'Delivered',399.99);\
+      \r
+
+      insert into Orders
+      values(1018,18,106,to_date('03/18/2024','mm/dd/yyyy'),'Shipped',1499.99);\
+      \r
+
+      insert into Orders
+      values(1019,19,107,to_date('03/19/2024','mm/dd/yyyy'),'Delivered',259.98);\
+      \r
+
+      insert into Orders
+      values(1020,20,108,to_date('03/20/2024','mm/dd/yyyy'),'Delivered',249.99);\
+      \r
+
+      insert into Orders
+      values(1021,21,109,to_date('03/21/2024','mm/dd/yyyy'),'Shipped',699.99);\r
+
+      insert into Orders
+      values(1022,22,110,to_date('03/22/2024','mm/dd/yyyy'),'Delivered',2199.98\
+      );\r
+
+      insert into Orders
+      values(1023,23,113,to_date('03/23/2024','mm/dd/yyyy'),'Delivered',1899.99\
+      );\r
+
+      insert into Orders
+      values(1024,24,114,to_date('03/24/2024','mm/dd/yyyy'),'Shipped',2398);\r
+
+      insert into Orders
+      values(1025,25,115,to_date('03/25/2024','mm/dd/yyyy'),'Delivered',1499);\r
+
+      insert into Orders
+      values(1026,26,116,to_date('03/26/2024','mm/dd/yyyy'),'Delivered',1799.99\
+      );\r
+
+      insert into Orders
+      values(1027,27,117,to_date('03/27/2024','mm/dd/yyyy'),'Shipped',659.98);\r
+
+      insert into Orders
+      values(1028,28,118,to_date('03/28/2024','mm/dd/yyyy'),'Delivered',1199.98\
+      );\r
+
+      insert into Orders
+      values(1029,29,119,to_date('03/29/2024','mm/dd/yyyy'),'Delivered',119.99);\
+      \r
+
+      insert into Orders
+      values(1030,30,120,to_date('03/30/2024','mm/dd/yyyy'),'Shipped',199.98);\r
+
+      insert into Orders
+      values(1031,31,121,to_date('03/31/2024','mm/dd/yyyy'),'Delivered',129.99);\
+      \r
+
+      insert into Orders
+      values(1032,32,122,to_date('04/01/2024','mm/dd/yyyy'),'Delivered',559.98);\
+      \r
+
+      insert into Orders
+      values(1033,33,123,to_date('04/02/2024','mm/dd/yyyy'),'Shipped',2199.99);\
+      \r
+
+      insert into Orders
+      values(1034,34,124,to_date('04/03/2024','mm/dd/yyyy'),'Delivered',1599.98\
+      );\r
+
+      insert into Orders
+      values(1035,35,125,to_date('04/04/2024','mm/dd/yyyy'),'Delivered',1499.98\
+      );\r
+
+      insert into Orders
+      values(1036,36,126,to_date('04/05/2024','mm/dd/yyyy'),'Shipped',1999);\r
+
+      insert into Orders
+      values(1037,37,127,to_date('04/06/2024','mm/dd/yyyy'),'Delivered',2998);\r
+
+      insert into Orders
+      values(1038,38,128,to_date('04/07/2024','mm/dd/yyyy'),'Delivered',999.99);\
+      \r
+
+      insert into Orders
+      values(1039,39,129,to_date('04/08/2024','mm/dd/yyyy'),'Shipped',1999);\r
+
+      insert into Orders
+      values(1040,40,130,to_date('04/09/2024','mm/dd/yyyy'),'Delivered',4399.98\
+      );\r
+
+      insert into Orders
+      values(1041,41,131,to_date('04/10/2024','mm/dd/yyyy'),'Delivered',749.97);\
+      \r
+
+      insert into Orders
+      values(1042,42,132,to_date('04/11/2024','mm/dd/yyyy'),'Shipped',2999.96);"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 9. Create the Order Item Table\r
+
+      CREATE TABLE ORDER_ITEM\r
+
+      (ORDER_ITEM_ID INT NOT NULL ,\r
+
+      ORDER_ID INT,\r
+
+      PRODUCT_ID INT,\r
+
+      QUANTITY INT,\r
+
+      UNIT_PRICE DECIMAL(10,2),\r
+
+      LINE_TOTAL DECIMAL(10,2),\r
+
+      PRIMARY KEY(ORDER_ITEM_ID),\r
+
+      FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCT(PRODUCT_ID),\r
+
+      FOREIGN KEY(ORDER_ID) REFERENCES ORDERS(ORDER_ID));\r
+
+      -- Insert into Order Item Table\r
+
+      insert into Order_Item values(1,1000,1,1,1899.99,1899.99);\r
+
+      insert into Order_Item values(2,1002,2,1,1199,1199);\r
+
+      insert into Order_Item values(3,1003,3,1,1499,1499);\r
+
+      insert into Order_Item values(4,1004,4,2,1799.99,3599.98);\r
+
+      insert into Order_Item values(5,1005,5,1,329.99,329.99);\r
+
+      insert into Order_Item values(6,1006,6,1,599.99,599.99);\r
+
+      insert into Order_Item values(7,1007,7,2,119.99,239.98);\r
+
+      insert into Order_Item values(8,1008,8,1,99.99,99.99);\r
+
+      insert into Order_Item values(9,1009,9,1,129.99,129.99);\r
+
+      insert into Order_Item values(10,1010,10,2,279.99,559.98);\r
+
+      insert into Order_Item values(11,1011,11,1,2199.99,2199.99);\r
+
+      insert into Order_Item values(12,1012,12,1,799.99,799.99);\r
+
+      insert into Order_Item values(13,1013,1,1,1899.99,1899.99);\r
+
+      insert into Order_Item values(14,1014,2,1,1199,1199);\r
+
+      insert into Order_Item values(15,1015,3,1,1499,1499);\r
+
+      insert into Order_Item values(16,1016,4,2,1799.99,3599.98);\r
+
+      insert into Order_Item values(17,1017,5,1,329.99,329.99);\r
+
+      insert into Order_Item values(18,1018,6,1,599.99,599.99);\r
+
+      insert into Order_Item values(19,1019,7,2,119.99,239.98);\r
+
+      insert into Order_Item values(20,1020,8,1,99.99,99.99);\r
+
+      insert into Order_Item values(21,1021,19,1,129.99,129.99);\r
+
+      insert into Order_Item values(22,1022,10,2,279.99,559.98);\r
+
+      insert into Order_Item values(23,1023,11,1,2199.99,2199.99);\r
+
+      insert into Order_Item values(24,1024,12,1,799.99,799.99);\r
+
+      insert into Order_Item values(25,1025,13,1,749.99,749.99);\r
+
+      insert into Order_Item values(26,1026,14,1,1999,1999);\r
+
+      insert into Order_Item values(27,1027,15,2,1399.99,2799.98);\r
+
+      insert into Order_Item values(28,1028,16,1,999.99,999.99);\r
+
+      insert into Order_Item values(29,1029,17,1,399.99,399.99);\r
+
+      insert into Order_Item values(30,1030,18,1,1499.99,1499.99);\r
+
+      insert into Order_Item values(31,1031,19,2,129.99,259.98);\r
+
+      insert into Order_Item values(32,1032,20,1,249.99,249.99);\r
+
+      insert into Order_Item values(33,1033,21,1,699.99,699.99);\r
+
+      insert into Order_Item values(34,1034,22,2,1099.99,2199.98);\r
+
+      insert into Order_Item values(35,1035,1,1,1899.99,1899.99);\r
+
+      insert into Order_Item values(36,1036,2,2,1199,2398);\r
+
+      insert into Order_Item values(37,1037,3,2,1499,2998);\r
+
+      insert into Order_Item values(38,1038,16,1,999.99,999.99);\r
+
+      insert into Order_Item values(39,1039,7,1,1999,1999);\r
+
+      insert into Order_Item values(40,1040,11,2,2199.99,4399.98);\r
+
+      insert into Order_Item values(41,1041,20,3,249.99,749.97);\r
+
+      insert into Order_Item values(42,1042,13,4,749.99,2999.96);"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 10. Create the Payment Table\r
+
+      CREATE TABLE PAYMENT\r
+
+      (PAYMENT_ID INT NOT NULL,\r
+
+      ORDER_ID INT,\r
+
+      PAYMENT_METHOD VARCHAR(30),\r
+
+      AMOUNT DECIMAL(10,2),\r
+
+      PAYMENT_DATE DATE,\r
+
+      STATUS VARCHAR(30),\r
+
+      TRANSACTION_REF VARCHAR(30),\r
+
+      PRIMARY KEY(PAYMENT_ID),\r
+
+      FOREIGN KEY(ORDER_ID) REFERENCES ORDERS(ORDER_ID));\r
+
+      -- Insert into Payment Table\r
+
+      insert into Payment values(1,1000,'Debit
+      Card',1899.99,to_date('03/01/2024','mm/dd/yyyy'),'Completed','TXN-1001');\
+      \r
+
+      insert into Payment values(2,1002,'Credit
+      Card',1199,to_date('03/02/2024','mm/dd/yyyy'),'Completed','TXN-1002');\r
+
+      insert into Payment values(3,1003,'Debit
+      Card',1499,to_date('03/03/2024','mm/dd/yyyy'),'Completed','TXN-1003');\r
+
+      insert into Payment values(4,1004,'Credit
+      Card',3599.98,to_date('03/04/2024','mm/dd/yyyy'),'Completed','TXN-1004');\
+      \r
+
+      insert into Payment values(5,1005,'Debit
+      Card',329.99,to_date('03/05/2024','mm/dd/yyyy'),'Completed','TXN-1005');\r
+
+      insert into Payment values(6,1006,'Credit
+      Card',599.99,to_date('03/06/2024','mm/dd/yyyy'),'Completed','TXN-1006');\r
+
+      insert into Payment values(7,1007,'Debit
+      Card',239.98,to_date('03/07/2024','mm/dd/yyyy'),'Completed','TXN-1007');\r
+
+      insert into Payment values(8,1008,'Credit
+      Card',99.99,to_date('03/08/2024','mm/dd/yyyy'),'Completed','TXN-1008');\r
+
+      insert into Payment values(9,1009,'Debit
+      Card',129.99,to_date('03/09/2024','mm/dd/yyyy'),'Completed','TXN-1009');\r
+
+      insert into Payment values(10,1010,'Credit
+      Card',559.98,to_date('03/10/2024','mm/dd/yyyy'),'Completed','TXN-1010');\r
+
+      insert into Payment values(11,1011,'Debit
+      Card',2199.99,to_date('03/11/2024','mm/dd/yyyy'),'Completed','TXN-1011');\
+      \r
+
+      insert into Payment values(12,1012,'Credit
+      Card',799.99,to_date('03/12/2024','mm/dd/yyyy'),'Completed','TXN-1012');\r
+
+      insert into Payment values(13,1013,'Credit
+      Card',749.99,to_date('03/13/2024','mm/dd/yyyy'),'Completed','TXN-1013');\r
+
+      insert into Payment values(14,1014,'Credit
+      Card',1999,to_date('03/14/2024','mm/dd/yyyy'),'Completed','TXN-1014');\r
+
+      insert into Payment values(15,1015,'Credit
+      Card',2799.98,to_date('03/15/2024','mm/dd/yyyy'),'Completed','TXN-1015');\
+      \r
+
+      insert into Payment values(16,1016,'Credit
+      Card',999.99,to_date('03/16/2024','mm/dd/yyyy'),'Completed','TXN-1016');\r
+
+      insert into Payment values(17,1017,'Credit
+      Card',399.99,to_date('03/17/2024','mm/dd/yyyy'),'Completed','TXN-1017');\r
+
+      insert into Payment values(18,1018,'Credit
+      Card',1499.99,to_date('03/18/2024','mm/dd/yyyy'),'Completed','TXN-1018');\
+      \r
+
+      insert into Payment values(19,1019,'Credit
+      Card',259.98,to_date('03/19/2024','mm/dd/yyyy'),'Completed','TXN-1019');\r
+
+      insert into Payment values(20,1020,'Credit
+      Card',249.99,to_date('03/20/2024','mm/dd/yyyy'),'Completed','TXN-1020');\r
+
+      insert into Payment values(21,1021,'Credit
+      Card',699.99,to_date('03/21/2024','mm/dd/yyyy'),'Completed','TXN-1021');\r
+
+      insert into Payment values(22,1022,'Credit
+      Card',2199.98,to_date('03/22/2024','mm/dd/yyyy'),'Completed','TXN-1022');\
+      \r
+
+      insert into Payment values(23,1023,'Credit
+      Card',1899.99,to_date('03/23/2024','mm/dd/yyyy'),'Completed','TXN-1023');\
+      \r
+
+      insert into Payment values(24,1024,'Credit
+      Card',2398,to_date('03/24/2024','mm/dd/yyyy'),'Completed','TXN-1024');\r
+
+      insert into Payment values(25,1025,'Credit
+      Card',1499,to_date('03/25/2024','mm/dd/yyyy'),'Completed','TXN-1025');\r
+
+      insert into Payment values(26,1026,'Credit
+      Card',1799.99,to_date('03/26/2024','mm/dd/yyyy'),'Completed','TXN-1026');\
+      \r
+
+      insert into Payment values(27,1027,'Credit
+      Card',659.98,to_date('03/27/2024','mm/dd/yyyy'),'Completed','TXN-1027');\r
+
+      insert into Payment values(28,1028,'Credit
+      Card',1199.98,to_date('03/28/2024','mm/dd/yyyy'),'Completed','TXN-1028');\
+      \r
+
+      insert into Payment values(29,1029,'Credit
+      Card',119.99,to_date('03/29/2024','mm/dd/yyyy'),'Completed','TXN-1029');\r
+
+      insert into Payment values(30,1030,'Credit
+      Card',199.98,to_date('03/30/2024','mm/dd/yyyy'),'Completed','TXN-1030');\r
+
+      insert into Payment values(31,1031,'Credit
+      Card',129.99,to_date('03/31/2024','mm/dd/yyyy'),'Completed','TXN-1031');\r
+
+      insert into Payment values(32,1032,'Credit
+      Card',559.98,to_date('04/01/2024','mm/dd/yyyy'),'Completed','TXN-1032');\r
+
+      insert into Payment values(33,1033,'Credit
+      Card',2199.99,to_date('04/02/2024','mm/dd/yyyy'),'Completed','TXN-1033');\
+      \r
+
+      insert into Payment values(34,1034,'Credit
+      Card',1599.98,to_date('04/03/2024','mm/dd/yyyy'),'Completed','TXN-1034');\
+      \r
+
+      insert into Payment values(35,1035,'Credit
+      Card',1499.98,to_date('04/04/2024','mm/dd/yyyy'),'Completed','TXN-1035');\
+      \r
+
+      insert into Payment values(36,1036,'Credit
+      Card',1999,to_date('04/05/2024','mm/dd/yyyy'),'Completed','TXN-1036');\r
+
+      insert into Payment values(37,1037,'Credit
+      Card',2799.98,to_date('04/06/2024','mm/dd/yyyy'),'Completed','TXN-1037');\
+      \r
+
+      insert into Payment values(38,1038,'Credit
+      Card',999.99,to_date('04/07/2024','mm/dd/yyyy'),'Completed','TXN-1038');\r
+
+      insert into Payment values(39,1039,'Credit
+      Card',1199.97,to_date('04/08/2024','mm/dd/yyyy'),'Completed','TXN-1039');\
+      \r
+
+      insert into Payment values(40,1040,'Credit
+      Card',2999.98,to_date('04/09/2024','mm/dd/yyyy'),'Completed','TXN-1040');\
+      \r
+
+      insert into Payment values(41,1041,'Credit
+      Card',259.98,to_date('04/10/2024','mm/dd/yyyy'),'Completed','TXN-1041');\r
+
+      insert into Payment values(42,1042,'Credit
+      Card',749.97,to_date('04/11/2024','mm/dd/yyyy'),'Completed','TXN-1042');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 11. Create the Shipment Table\r
+
+      CREATE TABLE SHIPMENT\r
+
+      (SHIPMENT_ID INT NOT NULL ,\r
+
+      ORDER_ID INT,\r
+
+      WAREHOUSE_ID INT,\r
+
+      CARRIER VARCHAR(30),\r
+
+      TRACKING_NUMBER CHAR(8),\r
+
+      SHIP_DATE DATE,\r
+
+      DELIVERY_DATE DATE,\r
+
+      STATUS VARCHAR(30),\r
+
+      PRIMARY KEY(SHIPMENT_ID),\r
+
+      FOREIGN KEY(WAREHOUSE_ID) REFERENCES WAREHOUSE(WAREHOUSE_ID),\r
+
+      FOREIGN KEY(ORDER_ID) REFERENCES ORDERS(ORDER_ID));\r
+
+      -- Insert into Shipment Table\r
+
+      insert into Shipment
+      values(1,1000,1,'FedEx','TRK00001',to_date('03/01/2024','mm/dd/yyyy'),to_\
+      date('03/03/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(2,1002,2,'UPS','TRK00002',to_date('03/02/2024','mm/dd/yyyy'),to_da\
+      te('03/04/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(3,1003,3,'FedEx','TRK00003',to_date('03/03/2024','mm/dd/yyyy'),to_\
+      date('03/05/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(4,1004,4,'UPS','TRK00004',to_date('03/04/2024','mm/dd/yyyy'),to_da\
+      te('03/06/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(5,1005,5,'FedEx','TRK00005',to_date('03/05/2024','mm/dd/yyyy'),to_\
+      date('03/07/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(6,1006,6,'UPS','TRK00006',to_date('03/06/2024','mm/dd/yyyy'),to_da\
+      te('03/08/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(7,1007,7,'FedEx','TRK00007',to_date('03/07/2024','mm/dd/yyyy'),to_\
+      date('03/09/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(8,1008,8,'UPS','TRK00008',to_date('03/08/2024','mm/dd/yyyy'),to_da\
+      te('03/10/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(9,1009,9,'FedEx','TRK00009',to_date('03/09/2024','mm/dd/yyyy'),to_\
+      date('03/11/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(10,1010,10,'UPS','TRK00010',to_date('03/10/2024','mm/dd/yyyy'),to_\
+      date('03/12/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(11,1011,1,'FedEx','TRK00011',to_date('03/11/2024','mm/dd/yyyy'),to\
+      _date('03/13/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(12,1012,2,'UPS','TRK00012',to_date('03/12/2024','mm/dd/yyyy'),to_d\
+      ate('03/14/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(13,1013,4,'FedEx','TRK00013',to_date('03/13/2024','mm/dd/yyyy'),to\
+      _date('03/15/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(14,1014,5,'UPS','TRK00014',to_date('03/14/2024','mm/dd/yyyy'),to_d\
+      ate('03/16/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(15,1015,6,'FedEx','TRK00015',to_date('03/15/2024','mm/dd/yyyy'),to\
+      _date('03/17/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(16,1016,7,'UPS','TRK00016',to_date('03/16/2024','mm/dd/yyyy'),to_d\
+      ate('03/18/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(17,1017,8,'FedEx','TRK00017',to_date('03/17/2024','mm/dd/yyyy'),to\
+      _date('03/19/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(18,1018,9,'UPS','TRK00018',to_date('03/18/2024','mm/dd/yyyy'),to_d\
+      ate('03/20/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(19,1019,10,'FedEx','TRK00019',to_date('03/19/2024','mm/dd/yyyy'),t\
+      o_date('03/21/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(20,1020,1,'UPS','TRK00020',to_date('03/20/2024','mm/dd/yyyy'),to_d\
+      ate('03/22/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(21,1021,2,'FedEx','TRK00021',to_date('03/21/2024','mm/dd/yyyy'),to\
+      _date('03/23/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(22,1022,3,'UPS','TRK00022',to_date('03/22/2024','mm/dd/yyyy'),to_d\
+      ate('03/24/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(23,1023,4,'FedEx','TRK00023',to_date('03/23/2024','mm/dd/yyyy'),to\
+      _date('03/25/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(24,1024,5,'UPS','TRK00024',to_date('03/24/2024','mm/dd/yyyy'),to_d\
+      ate('03/26/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(25,1025,6,'FedEx','TRK00025',to_date('03/25/2024','mm/dd/yyyy'),to\
+      _date('03/27/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(26,1026,7,'UPS','TRK00026',to_date('03/26/2024','mm/dd/yyyy'),to_d\
+      ate('03/28/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(27,1027,8,'FedEx','TRK00027',to_date('03/27/2024','mm/dd/yyyy'),to\
+      _date('03/29/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(28,1028,9,'UPS','TRK00028',to_date('03/28/2024','mm/dd/yyyy'),to_d\
+      ate('03/30/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(29,1029,10,'FedEx','TRK00029',to_date('03/29/2024','mm/dd/yyyy'),t\
+      o_date('03/31/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(30,1030,1,'UPS','TRK00030',to_date('03/30/2024','mm/dd/yyyy'),to_d\
+      ate('04/01/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(31,1031,2,'FedEx','TRK00031',to_date('03/31/2024','mm/dd/yyyy'),to\
+      _date('04/02/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(32,1032,3,'UPS','TRK00032',to_date('04/01/2024','mm/dd/yyyy'),to_d\
+      ate('04/03/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(33,1033,4,'FedEx','TRK00033',to_date('04/02/2024','mm/dd/yyyy'),to\
+      _date('04/04/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(34,1034,5,'UPS','TRK00034',to_date('04/03/2024','mm/dd/yyyy'),to_d\
+      ate('04/05/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(35,1035,6,'FedEx','TRK00035',to_date('04/04/2024','mm/dd/yyyy'),to\
+      _date('04/06/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(36,1036,7,'UPS','TRK00036',to_date('04/05/2024','mm/dd/yyyy'),to_d\
+      ate('04/07/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(37,1037,8,'FedEx','TRK00037',to_date('04/06/2024','mm/dd/yyyy'),to\
+      _date('04/08/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(38,1038,9,'UPS','TRK00038',to_date('04/07/2024','mm/dd/yyyy'),to_d\
+      ate('04/09/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(39,1039,10,'FedEx','TRK00039',to_date('04/08/2024','mm/dd/yyyy'),t\
+      o_date('04/10/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(40,1040,1,'UPS','TRK00040',to_date('04/09/2024','mm/dd/yyyy'),to_d\
+      ate('04/11/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(41,1041,2,'FedEx','TRK00041',to_date('04/10/2024','mm/dd/yyyy'),to\
+      _date('04/12/2024','mm/dd/yyyy'),'Delivered');\r
+
+      insert into Shipment
+      values(42,1042,3,'UPS','TRK00042',to_date('04/11/2024','mm/dd/yyyy'),to_d\
+      ate('04/13/2024','mm/dd/yyyy'),'Delivered');"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 12. Create the Inventory Table\r
+
+      CREATE TABLE INVENTORY\r
+
+      (INVENTORY_ID INT NOT NULL ,\r
+
+      PRODUCT_ID INT,\r
+
+      WAREHOUSE_ID INT,\r
+
+      QUANTITY_ON_HAND INT,\r
+
+      REORDER_POINT INT,\r
+
+      SAFETY_STOCK INT,\r
+
+      PRIMARY KEY(INVENTORY_ID),\r
+
+      FOREIGN KEY(WAREHOUSE_ID) REFERENCES WAREHOUSE(WAREHOUSE_ID),\r
+
+      FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCT(PRODUCT_ID));\r
+
+      -- Insert into Inventory Table\r
+
+      insert into Inventory values(1,1,1,30,10,5);\r
+
+      insert into Inventory values(2,2,2,23,10,5);\r
+
+      insert into Inventory values(3,3,3,14,10,5);\r
+
+      insert into Inventory values(4,4,4,43,10,5);\r
+
+      insert into Inventory values(5,5,5,20,10,5);\r
+
+      insert into Inventory values(6,6,6,22,10,5);\r
+
+      insert into Inventory values(7,7,7,24,10,5);\r
+
+      insert into Inventory values(8,8,8,26,10,5);\r
+
+      insert into Inventory values(9,9,9,28,10,5);\r
+
+      insert into Inventory values(10,10,10,31,10,5);\r
+
+      insert into Inventory values(11,11,1,32,10,5);\r
+
+      insert into Inventory values(12,12,2,34,10,5);\r
+
+      insert into Inventory values(13,13,1,59,10,5);\r
+
+      insert into Inventory values(14,14,2,18,10,5);\r
+
+      insert into Inventory values(15,15,3,73,10,5);\r
+
+      insert into Inventory values(16,16,4,57,10,5);\r
+
+      insert into Inventory values(17,17,5,44,10,5);\r
+
+      insert into Inventory values(18,18,6,20,10,5);\r
+
+      insert into Inventory values(19,19,7,19,10,5);\r
+
+      insert into Inventory values(20,20,8,11,10,5);\r
+
+      insert into Inventory values(21,21,9,53,10,5);\r
+
+      insert into Inventory values(22,22,10,71,10,5);"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 13. Create the Return Table\r
+
+      CREATE TABLE RETURN\r
+
+      (RETURN_ID INT,\r
+
+      ORDER_ID INT,\r
+
+      CUSTOMER_ID INT,\r
+
+      STATUS VARCHAR(30),\r
+
+      REFUND_AMOUNT DECIMAL(10,2),\r
+
+      REASON_CODE VARCHAR(30),\r
+
+      PRIMARY KEY(RETURN_ID),\r
+
+      FOREIGN KEY(ORDER_ID) REFERENCES ORDERS(ORDER_ID),\r
+
+      FOREIGN KEY(CUSTOMER_ID) REFERENCES CUSTOMER(CUSTOMER_ID));\r
+
+      -- Insert into Return Table\r
+
+      insert into Return values(1,1000,1,'Pending',1899.99,'OTHER');\r
+
+      insert into Return values(2,1002,2,'Pending',1199,'DAMAGED');\r
+
+      insert into Return values(3,1003,3,'Approved',1499,'OTHER');\r
+
+      insert into Return values(4,1004,4,'Approved',1799.99,'WRONG_ITEM');\r
+
+      insert into Return values(5,1005,5,'Approved',329.99,'DEFECTIVE');\r
+
+      insert into Return values(6,1007,7,'Pending',119.99,'OTHER');\r
+
+      insert into Return values(7,1008,8,'Approved',99.99,'DAMAGED');\r
+
+      insert into Return values(8,1010,10,'Approved',279.99,'DEFECTIVE');\r
+
+      insert into Return values(9,1011,11,'Pending',2199.99,'OTHER');\r
+
+      insert into Return values(10,1013,13,'Approved',749.99,'OTHER');\r
+
+      insert into Return values(11,1014,14,'Pending',1999,'DAMAGED');\r
+
+      insert into Return values(12,1017,17,'Pending',399.99,'OTHER');\r
+
+      insert into Return values(13,1018,18,'Approved',1499.99,'OTHER');\r\n"
+    languageId: oracle-sql
+  - kind: 2
+    value: "-- 14. Create the Review Table\r
+
+      CREATE TABLE REVIEW\r
+
+      (REVIEW_ID INT,\r
+
+      PRODUCT_ID INT,\r
+
+      CUSTOMER_ID INT,\r
+
+      RATING INT CHECK (RATING IN (1,2,3,4,5)),\r
+
+      REVIEW_TEXT VARCHAR(500),\r
+
+      REVIEW_DATE DATE,\r
+
+      PRIMARY KEY(REVIEW_ID),\r
+
+      FOREIGN KEY(PRODUCT_ID) REFERENCES PRODUCT(PRODUCT_ID),\r
+
+      FOREIGN KEY(CUSTOMER_ID) REFERENCES CUSTOMER(CUSTOMER_ID));\r
+
+      -- Insert into Review Table\r
+
+      insert into Review values(1,1,1,2,'Product arrived quickly and works
+      great. The build quality feels
+      premium',to_date('05/01/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(2,2,2,3,'Good performance, but the battery life
+      could be better. Still a strong value
+      overall',to_date('05/02/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(3,3,3,4,'Exceeded expectations. I use this every
+      day for work and have not run into a single
+      issue',to_date('05/03/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(5,5,5,1,'It is okay, but not as durable as I
+      hoped. Might be better for light or casual
+      use',to_date('05/05/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(6,6,6,2,'Loving the smooth setup and fast
+      speeds. Great pick for anyone needing solid
+      performance',to_date('05/06/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(8,8,8,4,'Decent features, but the price feels a
+      little high. Customer support was helpful
+      though',to_date('05/08/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(10,10,10,1,'Amazing device. Crisp display, fast
+      response, and very comfortable to use
+      daily',to_date('05/10/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(11,4,4,5,'Really impressed with the performance
+      so far. Runs fast and handles everything I throw at
+      it',to_date('05/11/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(12,7,7,3,'Comfortable to use, but I wish the
+      keys felt a bit more solid for long typing
+      sessions',to_date('05/12/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(13,9,9,4,'Reliable storage and easy to set up.
+      Great for backups and extra game
+      installs',to_date('05/13/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(14,11,11,5,'Incredible graphics performance.
+      Games run smoother than I expected even at max
+      settings',to_date('05/14/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(15,12,12,3,'Display quality is sharp, but I have
+      noticed some minor backlight bleed in darker
+      scenes',to_date('05/15/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(16,13,1,4,'Lightweight and portable, perfect for
+      classes and coffee shops. Battery life has been
+      solid',to_date('05/16/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(17,14,2,5,'Handles video editing and
+      multitasking with no lag. Definitely worth the upgrade
+      price',to_date('05/17/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(18,18,6,4,'The ultrawide screen makes
+      productivity and gaming much more immersive and
+      efficient',to_date('05/18/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(19,21,9,5,'Colors look fantastic and it is super
+      smooth for both work and streaming
+      content',to_date('05/19/2024','mm/dd/yyyy'));\r
+
+      insert into Review values(20,20,8,2,'Good overall, but it runs a little
+      warmer and louder than I expected under heavy
+      use',to_date('05/20/2024','mm/dd/yyyy'));\r\n"
+    languageId: oracle-sql
